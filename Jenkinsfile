@@ -21,7 +21,7 @@ node {
                 sh '''
                 curl -X POST https://api.vercel.com/v13/deployments \
                     -H "Authorization: Bearer $VERCEL_TOKEN" \
-                    -F "files=@./build/*" \
+                    -F "files=build/*" \
                     -F "name=react-app-zulqifli" \
                     -F "target=production"
                 '''
