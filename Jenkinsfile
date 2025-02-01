@@ -17,11 +17,13 @@ node {
         }
         // deploy
         stage('Deploy') {
+            
+            sh 'zip -r build.zip build'
             withCredentials([string(credentialsId: 'vercel_token', variable: 'VERCEL_TOKEN')]) {
                 sh '''
                 curl -X POST https://api.vercel.com/v13/deployments \
                     -H "Authorization: Bearer $VERCEL_TOKEN" \
-                    -F "files=build/*" \
+                    -F "files=build.zip" \
                     -F "name=react-app-zulqifli" \
                     -F "target=production"
                 '''
