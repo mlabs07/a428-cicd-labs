@@ -3,9 +3,9 @@ node {
         // build, checkout latest code
         stage('Build') {
             checkout scm
-            sh 'chown -R root:node /usr/local/lib/node_modules'
-            sh 'npm install -g vercel --unsafe-perm=true'
+            // sh 'chown -R root:node /usr/local/lib/node_modules'
             sh 'npm install'
+            sh 'npm install -g vercel --unsafe-perm=true'
         }
         // test
         stage('Test') {
