@@ -3,8 +3,10 @@ node {
         // build, checkout latest code
         stage('Build') {
             checkout scm
-            sh 'npm install'
-            sh 'npm install -g vercel'
+            withEnv(['NODE_OPTIONS=--openssl-legacy-provider']) {
+                sh 'npm install'
+                sh 'npm install -g vercel'
+            }
         }
         // test
         stage('Test') {
