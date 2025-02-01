@@ -1,5 +1,5 @@
 node {
-    docker.image('node:16-buster-slim').inside("-p 3000:3000") {
+    docker.image('node:18-buster-slim').inside("-p 3000:3000") {
         // build, checkout latest code
         stage('Build') {
             checkout scm
