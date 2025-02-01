@@ -15,6 +15,8 @@ node {
             sh 'npm install'
             sh 'npm install -g vercel --unsafe-perm=true'
 
+            sh 'vercel --version'
+
         }
         // test
         stage('Test') {
