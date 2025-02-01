@@ -1,5 +1,5 @@
 node {
-    docker.image('node:16-buster').inside("-p 3000:3000") {
+    docker.image('node:16-buster').inside("-p 3000:3000 --user root") {
         // build, checkout latest code
         stage('Build') {
             checkout scm
