@@ -1,4 +1,8 @@
 node {
+
+    def staticFolder = 'vercel-static'
+    def projectName = 'dicoding-cicdreact-zulqifli'
+
     docker.image('node:18-buster-slim').inside("-p 3000:3000 --user root") {
         // build, checkout latest code
         stage('Build') {
@@ -19,8 +23,13 @@ node {
         }
         // deploy
         stage('Deploy') {
+
+            sh "cp -r build/. vercel-static/"
+
             withCredentials([string(credentialsId: 'vercel_token', variable: 'VERCEL_TOKEN')]) {
-                sh 'vercel --token=$VERCEL_TOKEN --prod --confirm'
+                sh """
+                    vercel --token=$VERCEL_TOKEN --cwd $staticFolder --name $projectName --prod --yes
+                """
             }
 
             sleep 60
