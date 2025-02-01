@@ -5,6 +5,7 @@ node {
             checkout scm
             withEnv(['NODE_OPTIONS=--openssl-legacy-provider']) {
                 sh 'npm install'
+                sh 'npm run build'
                 sh 'npm install -g vercel'
             }
         }
@@ -14,9 +15,7 @@ node {
         }
         // manual approval
         stage('Manual Approval'){
-            sh './jenkins/scripts/deliver.sh'
             input message: 'Lanjut ke tahap Deploy? (Klik "Proceed untuk lanjutkan")'
-            sh './jenkins/scripts/kill.sh'
         }
         // deploy
         stage('Deploy') {
