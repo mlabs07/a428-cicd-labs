@@ -1,10 +1,9 @@
 node {
-    docker.image('node:18-buster-slim').inside("-p 3000:3000") {
+    docker.image('node:16-buster-slim').inside("-p 3000:3000") {
         // build, checkout latest code
         stage('Build') {
             checkout scm
             sh 'npm install'
-            sh 'vercel --version'
         }
         // test
         stage('Test') {
@@ -19,7 +18,13 @@ node {
         // deploy
         stage('Deploy') {
             withCredentials([string(credentialsId: 'vercel_token', variable: 'VERCEL_TOKEN')]) {
-                sh 'vercel --token=$VERCEL_TOKEN --prod --confirm'
+                sh '''
+                curl -X POST https://api.vercel.com/v13/deployments \
+                    -H "Authorization: Bearer $VERCEL_TOKEN" \
+                    -F "files=@./build/*" \
+                    -F "name=react-app-zulqifli" \
+                    -F "target=production"
+                '''
             }
 
             sleep 60
