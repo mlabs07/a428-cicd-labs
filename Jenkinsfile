@@ -3,7 +3,7 @@ node {
         // build, checkout latest code
         stage('Build') {
             checkout scm
-            sh 'npm install -g vercel'
+            sh 'npm install -g vercel --unsafe-perm=true'
             sh 'npm install'
         }
         // test
