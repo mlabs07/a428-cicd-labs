@@ -3,20 +3,8 @@ node {
         // build, checkout latest code
         stage('Build') {
             checkout scm
-            // sh 'sudo chown -R root:node /usr/local/lib/node_modules'
-            // sh 'npm install'
-            // sh 'npm install -g vercel --unsafe-perm=true'
-
-            sh 'npm config set prefix /home/node/.npm-global'
-            sh 'mkdir -p /home/node/.npm-global/bin'
-            sh 'export PATH=/home/node/.npm-global/bin:$PATH'
-            
-            // Install dependencies
             sh 'npm install'
-            sh 'npm install -g vercel --unsafe-perm=true'
-
             sh 'vercel --version'
-
         }
         // test
         stage('Test') {
