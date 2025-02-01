@@ -19,7 +19,7 @@ node {
         stage('Deploy') {
             withCredentials([string(credentialsId: 'vercel_token', variable: 'VERCEL_TOKEN')]) {
                 sh '''
-                get --method=POST \
+                wget --method=POST \
                     --header="Authorization: Bearer $VERCEL_TOKEN" \
                     --body-file=<(echo -e "files=@./build/*\nname=react-app-zulqifli\ntarget=production") \
                     https://api.vercel.com/v13/deployments
