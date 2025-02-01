@@ -1,5 +1,5 @@
 node {
-    docker.image('node:22-buster').inside("-p 3000:3000 --user root") {
+    docker.image('node:18-buster-slim').inside("-p 3000:3000 --user root") {
         // build, checkout latest code
         stage('Build') {
             checkout scm
@@ -19,10 +19,8 @@ node {
         }
         // deploy
         stage('Deploy') {
-            withEnv(['NODE_OPTIONS=--openssl-legacy-provider']) {
-                withCredentials([string(credentialsId: 'vercel_token', variable: 'VERCEL_TOKEN')]) {
-                    sh 'vercel --token=$VERCEL_TOKEN --prod --confirm'
-                }
+            withCredentials([string(credentialsId: 'vercel_token', variable: 'VERCEL_TOKEN')]) {
+                sh 'vercel --token=$VERCEL_TOKEN --prod --confirm'
             }
 
             sleep 60
