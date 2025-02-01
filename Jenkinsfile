@@ -3,6 +3,7 @@ node {
         // build, checkout latest code
         stage('Build') {
             checkout scm
+            sh 'apt-get update && apt-get install -y zip'
             sh 'npm install'
         }
         // test
